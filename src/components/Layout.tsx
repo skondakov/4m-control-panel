@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Select, Toolbar, Typography, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
+import { AppBar, Box, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Select, Toolbar, Typography, FormControl, SelectChangeEvent } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -15,7 +16,8 @@ interface MenuItemType {
 
 const menuItems: MenuItemType[] = [
   { text: 'Home', icon: <HomeIcon />, path: '/' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  { text: 'Orders', icon: <SwapHorizIcon />, path: '/orders' },
+  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' }
 ];
 
 interface environmentOptionType {
