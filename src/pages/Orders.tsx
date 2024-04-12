@@ -46,7 +46,7 @@ const Orders: React.FC = () => {
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'opportunity_uuid', headerName: 'Opportunity UUID', width: 100 },
+    { field: 'opportunity_uuid', headerName: 'Opportunity UUID', width: 250 },
     { field: 'arbitrage_type', headerName: 'Arbitrage Type', width: 150 },
     { field: 'order_type', headerName: 'Type', width: 150 },
     { field: 'order_status', headerName: 'Status', width: 150 },
