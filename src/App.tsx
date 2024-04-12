@@ -3,9 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import Layout from './components/Layout';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Orders from './pages/Orders';
-import Settings from './pages/Settings';
+import routes from './config/routes';
 
 const App: React.FC = () => {
   return (
@@ -13,9 +11,9 @@ const App: React.FC = () => {
       <Router>
         <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/settings" element={<Settings />} />
+            {routes.map((route, index) => (
+              <Route key={index} path={route.path} element={route.element} />
+            ))}
           </Routes>
         </Layout>
       </Router>
