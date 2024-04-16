@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {DataGrid, GridPaginationModel} from '@mui/x-data-grid';
 import axios from 'axios';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState([]);
@@ -20,28 +21,40 @@ const Orders: React.FC = () => {
   }, [rowCount, setRowCountState]);
 
   const handlePaginationModelChange = (newModel: GridPaginationModel) => {
-    console.log(newModel)
     setPaginationModel(newModel);
   }
 
   useEffect(() => {
     document.title = 'Orders';
     setLoading(true);
-    axios.get('http://localhost:8000/orders', {
-      params: {
-        page: paginationModel.page,
-        per_page: paginationModel.pageSize
-      }
-    })
-      .then((response) => {
-        setOrders(response.data.orders)
-        setRowCount(response.data.total)
-        setLoading(false)
+    fetchAuthSession().then((session) => {
+      const jwtToken = session.tokens?.accessToken
+      axios.get(
+        'http://localhost:8000/orders',
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}` // include JWT token in Authorization header
+          },
+          params: {
+            page: paginationModel.page,
+            per_page: paginationModel.pageSize
+        }
       })
-      .catch((error) => {
-        console.error('There was an error!', error);
+        .then((response) => {
+          setOrders(response.data.orders)
+          setRowCount(response.data.total)
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.error('There was an error!', error);
+          setLoading(false);
+        });
+    }).catch(
+      (error) => {
+        console.error('There was an error fetching authentication token from Cognito!', error);
         setLoading(false);
-      });
+      }
+    )
   }, [paginationModel]);
 
   const columns = [

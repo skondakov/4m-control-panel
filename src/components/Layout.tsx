@@ -16,7 +16,7 @@ const environmentOptions: environmentOptionType[] = [
   { value: 'revuelto-plovdiv', label: 'Revuelto - Plovdiv' },
 ];
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => void) | undefined }> = ({ children, signOut }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [environment, setEnvironment] = useState(environmentOptions[0].value);
   const isMenuOpen = Boolean(anchorEl);
@@ -52,7 +52,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={signOut}>Logout</MenuItem>
     </Menu>
   );
 
