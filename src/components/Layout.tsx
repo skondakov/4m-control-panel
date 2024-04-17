@@ -74,7 +74,7 @@ const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => vo
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            4M Control Panel
+            🚀4M Control Panel🤑
           </Typography>
           <IconButton
             size="large"
