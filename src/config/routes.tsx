@@ -2,6 +2,7 @@
 import React from 'react';
 import Home from '../pages/Home';
 import Orders from '../pages/Orders';
+import ExchangesBalances from "../pages/ExchangesBalances";
 import Settings from '../pages/Settings';
 
 interface RouteType {
@@ -17,6 +18,10 @@ const routes: RouteType[] = [
   {
     path: '/orders',
     element: <Orders />,
+  },
+  {
+    path: '/exchanges_balances',
+    element: <ExchangesBalances />,
   },
   {
     path: '/settings',
