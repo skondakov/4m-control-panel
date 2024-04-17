@@ -15,6 +15,7 @@ interface environmentOptionType {
 const environmentOptions: environmentOptionType[] = [
   { value: '992-turbo-s-tokyo', label: '992 Turbo S - Tokyo' },
   { value: 'revuelto-plovdiv', label: 'Revuelto - Plovdiv' },
+  { value: 'localhost', label: 'Localhost' },
 ];
 
 const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => void) | undefined }> = ({ children, signOut }) => {
@@ -75,23 +76,6 @@ const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => vo
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             4M Control Panel
           </Typography>
-          {/* Environment Dropdown */}
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <Select
-              labelId="environment-select-label"
-              id="environment-select"
-              value={environment}
-              onChange={handleEnvironmentChange}
-              label="Environment"
-            >
-              {environmentOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {/* Profile Icon */}
           <IconButton
             size="large"
             edge="end"
@@ -120,6 +104,21 @@ const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => vo
         anchor="left"
       >
         <Toolbar /> {/* This adds space at the top of the drawer below the app bar */}
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <Select
+            labelId="environment-select-label"
+            id="environment-select"
+            value={environment}
+            onChange={handleEnvironmentChange}
+            label="Environment"
+          >
+            {environmentOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <List>
           {menuItems.map((item) => (
             <ListItemButton key={item.text} component={Link} to={item.path}>
