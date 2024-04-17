@@ -1,6 +1,6 @@
 // src/pages/Orders.tsx
 import React, { useEffect, useState } from 'react';
-import {DataGrid, GridPaginationModel} from '@mui/x-data-grid';
+import {DataGrid, GridPaginationModel, GridColDef} from '@mui/x-data-grid';
 import axios from 'axios';
 import { fetchAuthSession } from 'aws-amplify/auth';
 
@@ -29,8 +29,11 @@ const Orders: React.FC = () => {
     setLoading(true);
     fetchAuthSession().then((session) => {
       const jwtToken = session.tokens?.accessToken
+      if (paginationModel.page === 0) {
+        paginationModel.page = 1
+      }
       axios.get(
-        'http://localhost:8000/orders',
+        'http://localhost:8000/orders/',
         {
           headers: {
             Authorization: `Bearer ${jwtToken}` // include JWT token in Authorization header
@@ -57,15 +60,37 @@ const Orders: React.FC = () => {
     )
   }, [paginationModel]);
 
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'opportunity_uuid', headerName: 'Opportunity UUID', width: 250 },
-    { field: 'arbitrage_type', headerName: 'Arbitrage Type', width: 150 },
-    { field: 'order_type', headerName: 'Type', width: 150 },
-    { field: 'order_status', headerName: 'Status', width: 150 },
-    { field: 'order_ref', headerName: 'Exchange Ref', width: 250 },
-    { field: 'amount', headerName: 'Amount', width: 150 },
-    { field: 'price', headerName: 'Price', width: 150 }
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', flex: 1 },
+    { field: 'opportunity_uuid', headerName: 'Opportunity UUID', flex: 2 },
+    { field: 'arbitrage_type', headerName: 'Arbitrage Type', align: 'center', flex: 1 },
+    { field: 'order_type', headerName: 'Type', align: 'center', flex: 1},
+    { field: 'order_status', headerName: 'Status', align: 'center', flex: 1 },
+    { field: 'order_ref', headerName: 'Exchange Ref', flex: 2 },
+    {
+      field: 'amount',
+      headerName: 'Amount',
+      flex: 1,
+      align: 'right',
+      valueFormatter: (value?: string) => {
+        if (value == null) {
+          return '';
+        }
+        return parseFloat(value).toFixed(4)
+      }
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      flex: 1,
+      align: 'right',
+      valueFormatter: (value?: string) => {
+        if (value == null) {
+          return '';
+        }
+        return parseFloat(value).toFixed(4)
+      }
+    }
     // add other fields as necessary
   ];
 
