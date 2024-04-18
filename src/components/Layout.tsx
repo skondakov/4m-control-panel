@@ -18,7 +18,7 @@ const environmentOptions: environmentOptionType[] = [
   { value: 'localhost', label: 'Localhost' },
 ];
 
-const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => void) | undefined, user: AuthUser | undefined }> = ({ children, signOut, user }) => {
+const Layout: React.FC<{ children: React.ReactNode, user: AuthUser | undefined, signOut: ((data?: any) => void) | undefined }> = ({ children, user, signOut }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [environment, setEnvironment] = useState(environmentOptions[0].value);
   const isMenuOpen = Boolean(anchorEl);

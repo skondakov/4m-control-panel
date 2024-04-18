@@ -11,9 +11,10 @@ const Settings: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <Typography variant="h4">Settings</Typography>
-      <Typography paragraph>This is the settings page of the admin dashboard.</Typography>
+    <>
+      <Box mt={2} mb={4}>
+        <Typography variant="h4">Settings</Typography>
+      </Box>
       <Box
         display="flex"
         flexDirection="column"
@@ -27,7 +28,7 @@ const Settings: React.FC = () => {
           </Typography>
         </Box>
       </Box>
-    </div>
+    </>
   );
 };
 
