@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {DataGrid, GridPaginationModel, GridColDef} from '@mui/x-data-grid';
 import {getOrders, Order} from "../services/ordersApiService";
+import {Box, Typography} from "@mui/material";
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -76,26 +77,31 @@ const Orders: React.FC = () => {
   ];
 
   return (
-    <div style={{width: '100%'}}>
-      <DataGrid
-        rows={orders}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 50,
+    <>
+      <Box mt={2} mb={4}>
+        <Typography variant="h4">Exchanges Orders</Typography>
+      </Box>
+      <Box>
+        <DataGrid
+          rows={orders}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 50,
+              },
             },
-          },
-        }}
-        rowCount={rowCountState}
-        pageSizeOptions={[5, 10, 20, 50, 100]}
-        pagination
-        paginationModel={paginationModel}
-        paginationMode="server"
-        onPaginationModelChange={handlePaginationModelChange}
-        loading={loading}
-      />
-    </div>
+          }}
+          rowCount={rowCountState}
+          pageSizeOptions={[5, 10, 20, 50, 100]}
+          pagination
+          paginationModel={paginationModel}
+          paginationMode="server"
+          onPaginationModelChange={handlePaginationModelChange}
+          loading={loading}
+        />
+      </Box>
+    </>
   );
 };
 
