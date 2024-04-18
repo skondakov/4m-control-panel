@@ -1,19 +1,13 @@
-import axios from 'axios';
-import {fetchAuthSession} from 'aws-amplify/auth';
+import {AxiosResponse} from 'axios';
+import {getRequest} from "./apiService";
 
-export const getAssets = async () => {
-  try {
-    const session = await fetchAuthSession();
-    const jwtToken = session.tokens?.accessToken
-    return axios.get(
-      'http://localhost:8000/assets/',
-      {
-        headers: {
-          Authorization: `Bearer ${jwtToken}` // include JWT token in Authorization header
-        }
-      });
-  } catch (error) {
-    console.error('There was an error!', error);
-    throw error;
-  }
+export interface Asset {
+  id: number;
+  code: string | null;
+  active: boolean;
+  trading: boolean;
+}
+
+export const getAssets = async (): Promise<AxiosResponse<Asset[]>> => {
+  return getRequest('assets');
 };

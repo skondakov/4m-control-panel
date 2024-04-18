@@ -1,10 +1,10 @@
 // src/pages/Orders.tsx
 import React, {useEffect, useState} from 'react';
 import {DataGrid, GridPaginationModel, GridColDef} from '@mui/x-data-grid';
-import {getOrders} from "../services/ordersApiService";
+import {getOrders, Order} from "../services/ordersApiService";
 
 const Orders: React.FC = () => {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [rowCount, setRowCount] = useState(0);
   const [paginationModel, setPaginationModel] = React.useState<GridPaginationModel>({
@@ -25,6 +25,9 @@ const Orders: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Orders';
+    if (paginationModel.page === 0) {
+      return;
+    }
     setLoading(true);
     getOrders(paginationModel.page, paginationModel.pageSize)
       .then((response) => {
