@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Box, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Select, Toolbar, Typography, FormControl, SelectChangeEvent } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import menuItems from '../config/menuItems';
+import { type AuthUser } from "aws-amplify/auth";
 import { Link } from 'react-router-dom';
-import { getCurrentUser } from 'aws-amplify/auth';
 
 const drawerWidth = 240;
 
@@ -18,20 +18,10 @@ const environmentOptions: environmentOptionType[] = [
   { value: 'localhost', label: 'Localhost' },
 ];
 
-const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => void) | undefined }> = ({ children, signOut }) => {
+const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => void) | undefined, user: AuthUser | undefined }> = ({ children, signOut, user }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [environment, setEnvironment] = useState(environmentOptions[0].value);
   const isMenuOpen = Boolean(anchorEl);
-  const [user, setUser] = useState('');
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { username,  } = await getCurrentUser();
-      setUser(username);
-    };
-
-    fetchUser();
-  }, []);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -86,7 +76,7 @@ const Layout: React.FC<{ children: React.ReactNode, signOut: ((data?: any) => vo
             color="inherit"
           >
             <AccountCircle />
-            <Typography sx={{ ml: 1 }}>{user}</Typography>
+            <Typography sx={{ ml: 1 }}>{user === undefined ? 'unknown' : user.username}</Typography>
           </IconButton>
         </Toolbar>
       </AppBar>

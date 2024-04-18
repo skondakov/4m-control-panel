@@ -18,7 +18,7 @@ const App: React.FC<AppProps> = ({ signOut, user }) => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Layout signOut={signOut}>
+        <Layout signOut={signOut} user={user}>
           <Routes>
             {routes.map((route, index) => (
               <Route key={index} path={route.path} element={route.element} />
